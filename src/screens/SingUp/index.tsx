@@ -22,12 +22,11 @@ const SingUp = () => {
     auth()
     .createUserWithEmailAndPassword(user.email, user.password)
     .then(() => Alert.alert('Account created successfully'))
+    .catch((erro) => Alert.alert(erro.message.split("]")[1]))
     .finally(() => setIsLoading(false))
 
   } catch (error) {
     console.log(error);
-    Alert.alert('error')
-    setIsLoading(false);
   }
 
   };
