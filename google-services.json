@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "995647375259",
+    "project_id": "cleberapp-2be3b",
+    "storage_bucket": "cleberapp-2be3b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995647375259:android:cb0b9e7cd3d58114ac033e",
+        "android_client_info": {
+          "package_name": "com.cleberApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "995647375259-bkqp1rgadoijce9el19a1vda9aknpv6i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4rZmysslzwyW72O9FpY9IIBs0UoQbyy4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "995647375259-bkqp1rgadoijce9el19a1vda9aknpv6i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
