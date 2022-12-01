@@ -40,7 +40,6 @@ const AddVehicle = () => {
       Color: '',
       Odometer: '',
       Year: '',
-
     }
   }
 
