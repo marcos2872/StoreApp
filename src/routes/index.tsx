@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import Account from '../screens/Account';
+import AddVehicle from '../screens/AddVehicle';
 import Chat from '../screens/Chat';
 import Home from '../screens/Home';
 import Search from '../screens/Search';
@@ -22,6 +23,7 @@ export function Routes(){
 
         <Screen name='singup' component={SingUp} options={{
         title: 'Register',
+        
         headerTitleAlign: 'center',
         headerStyle: {
           backgroundColor: theme.LIGTH.Back,
@@ -43,6 +45,7 @@ export function Routes(){
       }} />
       
         <Screen name='account' component={Account} options={{headerShown: false}} />
+        <Screen name='addvehicle' component={AddVehicle} options={{headerShown: false}} />
       </Navigator>
     </NavigationContainer>
   )

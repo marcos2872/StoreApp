@@ -7,9 +7,9 @@
     "icon": "./src/assets/car.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./src/assets/car.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#d9d9d9"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -26,7 +26,7 @@
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#d9d9d9"
       },
       "package": "com.cleberApp"
     },

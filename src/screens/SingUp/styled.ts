@@ -38,6 +38,7 @@ width: 50%;
 height: ${RFPercentage(5)}px;
 margin-top: ${RFPercentage(2)}px;
 border-radius: ${RFPercentage(1)}px;
+border: 3px solid ${(props) => props.disabled ? '#FF0000' : '#00FF15' };
 align-items: center;
 justify-content: center;
 `
@@ -45,6 +46,13 @@ export const Text = styled.Text`
 color: ${({theme}) => theme.LIGTH.IconText};
 font-family: ${({theme}) => theme.FONTS.Medium};
 font-size: ${RFPercentage(2.5)}px;
+font-family: ${({theme}) => theme.FONTS.Regular};
+`
+
+export const TextIn = styled.Text`
+color: ${({theme}) => theme.LIGTH.IconText};
+font-family: ${({theme}) => theme.FONTS.Medium};
+font-size: ${RFPercentage(1.1)}px;
 font-family: ${({theme}) => theme.FONTS.Regular};
 `
 export const Loading = styled.Image`

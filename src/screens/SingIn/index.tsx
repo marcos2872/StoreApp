@@ -1,35 +1,36 @@
 import React, { useState } from 'react';
-import { Button, Container, Form, Input, Text, Icon, Loading } from './styled';
+import { Button, Container, Form, Input, Text, Icon, Loading, Link, TextIn } from './styled';
 
 import auth from '@react-native-firebase/auth';
 import { Alert } from 'react-native';
-
-type userType = {
-  email: string;
-  password: string;
-}
+import * as EmailValidator from 'email-validator';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
 
 const SingIn = () => {
-  const [user, setUser] = useState<userType>({
-    email: '',
-    password: '',
-  });
+  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const navigation = useNavigation() as {navigate: (para: string) => void};
 
   const handleNewAccount = () => {
-    Alert.alert('Função não implementada')
-  // setIsLoading(true)
-  // try {
-  //   auth()
-  //   .createUserWithEmailAndPassword(user.email, user.password)
-  //   .then(() => Alert.alert('Account created successfully'))
-  //   .finally(() => setIsLoading(false))
+  setIsLoading(true)
+  try {
+    auth().signInWithEmailAndPassword(email, pass)
+    .then(async (res) => {
+      
+      // const fire = await firestore().collection('users').doc(res.user.uid).get() as unknown as {'_data': any}
+      await AsyncStorage.setItem('@cleberapp:user', JSON.stringify({isLogged: true, userId: res.user.uid}))
 
-  // } catch (error) {
-  //   console.log(error);
-  //   Alert.alert('error')
-  //   setIsLoading(false);
-  // }
+      navigation.navigate('home')
+    })
+    .catch((erro) => Alert.alert(erro.message.split("]")[1]))
+    .finally(() => setIsLoading(false))
+
+  } catch (error) {
+    console.log(error);
+  }
 
 
   };
@@ -39,25 +40,22 @@ const SingIn = () => {
       <Icon source={require('../../assets/entrar-user.png')}/>
       <Form>
       <Input placeholder='E-mail' keyboardType='email-address' onChangeText={(text) => {
-        setUser((prev) => ({
-          ...prev,
-          email: text,
-        }))
+        setEmail(text)
       }} />
-      <Input placeholder='Password' onChangeText={(text)  => {
-        setUser((prev) => ({
-          ...prev,
-          password: text,
-        }))
+      <Input placeholder='Password' secureTextEntry={true} onChangeText={(text)  => {
+        setPass(text)
       }} />
       {isLoading ? (
         <Button><Loading source={require('../../assets/loading.gif')}/></Button>
       ) : (
-      <Button onPress={handleNewAccount} >
+      <Button onPress={handleNewAccount} disabled={!(EmailValidator.validate(email) && pass.length >= 6)} >
         <Text>Log In</Text>
       </Button>
       )}
       </Form>
+      <Link onPress={() => navigation.navigate('singup')}>
+      <TextIn>Create an account</TextIn>
+      </Link>
     </Container>
   )
 }
