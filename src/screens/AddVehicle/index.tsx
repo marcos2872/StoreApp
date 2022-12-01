@@ -44,7 +44,6 @@ const AddVehicle = () => {
     }
   }
 
-
   return (
     <Container>
       <OptionsScreens />
