@@ -45,7 +45,16 @@ export function Routes(){
       }} />
       
         <Screen name='account' component={Account} options={{headerShown: false}} />
-        <Screen name='addvehicle' component={AddVehicle} options={{headerShown: false}} />
+        <Screen name='addvehicle' component={AddVehicle} options={{
+        title: 'Vehicle',
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: theme.LIGTH.Back,
+        },
+        headerTitleStyle:{
+          fontFamily: 'Roboto_700Bold'
+        }
+      }}  />
       </Navigator>
     </NavigationContainer>
   )
