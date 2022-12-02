@@ -40,7 +40,7 @@ font-family: ${({theme}) => theme.FONTS.Regular};
 export const Swit = styled(CheckBox)`
 `
 export const Button = styled.TouchableOpacity`
-background-color: transparent;
+background-color: ${({theme}) => theme.LIGTH.Cards };
 width: ${RFPercentage(10)}px;
 height: ${RFPercentage(5)}px;
 align-items: center;

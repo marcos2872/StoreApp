@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { Container, Form, Input, InputConteiner, Section, Swit, Text, Title } from './styled'
+import { Button, Container, Form, Input, InputConteiner, Section, Swit, Text, Title } from './styled'
 import firestore from '@react-native-firebase/firestore';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { preventAutoHideAsync } from 'expo-splash-screen';
+import { utils } from '@react-native-firebase/app';
+import storage from '@react-native-firebase/storage';
+import * as ImagePicker from 'expo-image-picker';
 
 const featuresList = ["Power Steering", "Air Conditioner", "Anti Lock Braking System", "Passenger Airbag", "Fog Lights - Front", "Power Windows Front", "Wheel Covers", "Driver Airbag", "Automatic Climate Control"]
 const specificationsList = ["Engine Type", "No. of cylinder", "Fuel Type", "Max Torque", "Transmission Type", "Gear Box", "Drive Type", "Fuel Tank Capacity", "Max Power", "Body Type", "Boot Space (Litres)", "Seating Capacity"]
 const descriptionList = ["Make", "Model", "Variant", "Color", "Odometer", "Year"]
+
+type dataType  = {
+  _documentPath: {
+    _parts: string[]
+  }
+}
 
 const AddVehicle = () => {
   const [specifications, setSpecifications] = useState({
@@ -44,6 +51,37 @@ const AddVehicle = () => {
       Year: '',
     })
 
+    const [image, setImage] = useState<string[]>([])
+
+  const headlerSave = async () => {
+    try {
+      const { _documentPath: { _parts } } = await firestore().collection('vehicles').add({ description, features, specifications }) as unknown as dataType;
+      let count = 1;
+      image.forEach(async (element) => {
+        const reference = storage().ref(`${description.Model + _parts}/image${count}`);
+        count += 1;
+        await reference.putFile(element)
+      });
+
+    } catch (error) {
+      console.log(error);
+      // Alert.alert(error)
+    }
+  }
+
+  const headlerUploadImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!result.canceled) {
+      setImage((prev) => [...prev, result.assets[0].uri]);
+    }
+    
+  }
+
   return (
     <Container>
       <Form>
@@ -75,6 +113,14 @@ const AddVehicle = () => {
         ))}
         </Section>
       </Form>
+
+      <Button onPress={headlerUploadImage}>
+        <Text>Upload Image</Text>
+      </Button>
+
+      <Button onPress={headlerSave}>
+        <Text>Save</Text>
+      </Button>
     </Container>
   )
 }
