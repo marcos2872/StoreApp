@@ -39,9 +39,11 @@ const Account = () => {
         <SingOutIcon source={logget? require('../../assets/sair.png') : require('../../assets/entrar-user.png')  }/>
       </SingOut>
       <Text>{userData && userData.email}</Text>
+      {userData && (
       <Button onPress={() => navigator.navigate('addvehicle')}>
         <Text>add vehicle</Text>
       </Button>
+      )}
       <OptionsScreens />
     </Container>
   )

@@ -5,6 +5,8 @@ import firestore from '@react-native-firebase/firestore';
 import { utils } from '@react-native-firebase/app';
 import storage from '@react-native-firebase/storage';
 import * as ImagePicker from 'expo-image-picker';
+import { firebase } from '@react-native-firebase/auth';
+import { Alert } from 'react-native';
 
 const featuresList = ["Power Steering", "Air Conditioner", "Anti Lock Braking System", "Passenger Airbag", "Fog Lights - Front", "Power Windows Front", "Wheel Covers", "Driver Airbag", "Automatic Climate Control"]
 const specificationsList = ["Engine Type", "No. of cylinder", "Fuel Type", "Max Torque", "Transmission Type", "Gear Box", "Drive Type", "Fuel Tank Capacity", "Max Power", "Body Type", "Boot Space (Litres)", "Seating Capacity"]
@@ -53,21 +55,31 @@ const AddVehicle = () => {
 
     const [image, setImage] = useState<string[]>([])
 
+    const [progress, setProgress] = useState<string[]>([])
+
   const headlerSave = async () => {
+    let count = 1;
     try {
-      const { _documentPath: { _parts } } = await firestore().collection('vehicles').add({ description, features, specifications }) as unknown as dataType;
-      let count = 1;
+      const { _documentPath: { _parts } } = await firestore()
+      .collection('vehicles').add({ description, features, specifications }) as unknown as dataType;
       image.forEach(async (element) => {
         const reference = storage().ref(`${description.Model + _parts}/image${count}`);
         count += 1;
         await reference.putFile(element)
+        setProgress((prev) => [...prev, 'sucess'])
       });
-
+      
     } catch (error) {
       console.log(error);
-      // Alert.alert(error)
     }
   }
+
+  useEffect(() => {
+    if (progress.length !== 0 && progress.length === image.length) {
+      Alert.alert('terminou');
+    }
+
+  }, [progress])
 
   const headlerUploadImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -87,7 +99,7 @@ const AddVehicle = () => {
       <Form>
         <Section>
           <Title>Description</Title>
-        {descriptionList.map((curr) => (
+        {descriptionList.map((curr: string) => (
           <InputConteiner key={curr}>
             <Text>{curr}</Text>
             <Input value={description[curr]} onChangeText={(value) => setDescription((prev) => ({...prev, [curr]: value }))} />
@@ -112,7 +124,6 @@ const AddVehicle = () => {
           </InputConteiner>
         ))}
         </Section>
-      </Form>
 
       <Button onPress={headlerUploadImage}>
         <Text>Upload Image</Text>
@@ -121,6 +132,8 @@ const AddVehicle = () => {
       <Button onPress={headlerSave}>
         <Text>Save</Text>
       </Button>
+      </Form>
+
     </Container>
   )
 }
