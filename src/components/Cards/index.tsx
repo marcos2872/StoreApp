@@ -5,7 +5,7 @@ import storage, { FirebaseStorageTypes } from '@react-native-firebase/storage';
 import { Card, Container, Image, Price, Scroll, Text, Title } from './styled'
 
 const Cards = () => {
-  const [vehiclesData, setVehiclesData] = useState<any>([])
+  const [vehiclesData, setVehiclesData] = useState<any[]>([])
 
   useEffect(() => {
 
@@ -28,37 +28,19 @@ const Cards = () => {
     }
         teste()
   }, [])
+// console.log(vehiclesData);
 
   return (
     <Container>
-      <Scroll> 
-      <Card>
-        <Image />
-        <Title>Title</Title>
-        <Text>Text</Text>
-        <Price>Price</Price>
+      <Scroll>
+        {vehiclesData.length > 0 && vehiclesData.map((curr) => (
+      <Card key={curr.id}>
+        <Image source={{uri: curr.images[0]}}/>
+        <Title>{curr.description.Model}</Title>
+        <Text>{curr.description.Year}</Text>
+        <Price>${curr.description.Price}</Price>
       </Card>
-
-      <Card>
-        <Image />
-        <Title>Title</Title>
-        <Text>Text</Text>
-        <Price>Price</Price>
-      </Card>
-
-      <Card>
-        <Image />
-        <Title>Title</Title>
-        <Text>Text</Text>
-        <Price>Price</Price>
-      </Card>
-
-      <Card>
-        <Image />
-        <Title>Title</Title>
-        <Text>Text</Text>
-        <Price>Price</Price>
-      </Card>
+        ))}
 
       </Scroll>
     </Container>

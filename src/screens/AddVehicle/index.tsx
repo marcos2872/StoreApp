@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
+// import { useNavigation } from '@react-navigation/native'
 import { Button, Container, Form, Input, InputConteiner, Section, Swit, Text, Title } from './styled'
 import firestore from '@react-native-firebase/firestore';
-import { utils } from '@react-native-firebase/app';
+// import { utils } from '@react-native-firebase/app';
 import storage from '@react-native-firebase/storage';
 import * as ImagePicker from 'expo-image-picker';
-import { firebase } from '@react-native-firebase/auth';
+// import { firebase } from '@react-native-firebase/auth';
 import { Alert } from 'react-native';
 
 const featuresList = ["Power Steering", "Air Conditioner", "Anti Lock Braking System", "Passenger Airbag", "Fog Lights - Front", "Power Windows Front", "Wheel Covers", "Driver Airbag", "Automatic Climate Control"]
 const specificationsList = ["Engine Type", "No. of cylinder", "Fuel Type", "Max Torque", "Transmission Type", "Gear Box", "Drive Type", "Fuel Tank Capacity", "Max Power", "Body Type", "Boot Space (Litres)", "Seating Capacity"]
-const descriptionList = ["Make", "Model", "Variant", "Color", "Odometer", "Year"]
+const descriptionList = ["Make", "Model", "Variant", "Color", "Odometer", "Year", 'Price']
 
 type dataType  = {
   _documentPath: {
@@ -51,6 +51,7 @@ const AddVehicle = () => {
       Color: '',
       Odometer: '',
       Year: '',
+      Price: '',
     })
 
     const [image, setImage] = useState<string[]>([])
