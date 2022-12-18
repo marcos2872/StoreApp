@@ -7,6 +7,7 @@ import Home from '../screens/Home';
 import Search from '../screens/Search';
 import SingIn from '../screens/SingIn';
 import SingUp from '../screens/SingUp';
+import Vehicle from '../screens/vehicle';
 import theme from '../theme';
 
 const {Screen, Navigator} = createNativeStackNavigator();
@@ -46,6 +47,17 @@ export function Routes(){
       
         <Screen name='account' component={Account} options={{headerShown: false}} />
         <Screen name='addvehicle' component={AddVehicle} options={{
+        title: 'Vehicle',
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: theme.LIGTH.Back,
+        },
+        headerTitleStyle:{
+          fontFamily: 'Roboto_700Bold'
+        }
+      }}  />
+
+        <Screen name='vehicle' component={Vehicle} options={{
         title: 'Vehicle',
         headerTitleAlign: 'center',
         headerStyle: {

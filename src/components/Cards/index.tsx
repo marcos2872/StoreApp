@@ -1,40 +1,30 @@
 import React, { useEffect, useState } from 'react'
-import firestore from '@react-native-firebase/firestore';
-import storage, { FirebaseStorageTypes } from '@react-native-firebase/storage';
 
 import { Card, Container, Image, Price, Scroll, Text, Title } from './styled'
+import getData from '../../services/getData';
+import { useNavigation } from '@react-navigation/native';
+import { setData } from '../../redux/reduces/data'
+import { useDispatch } from 'react-redux'
 
 const Cards = () => {
-  const [vehiclesData, setVehiclesData] = useState<any[]>([])
+  const [vehiclesData, setVehiclesData] = useState<any[]>([]);
+  const navigation = useNavigation() as {navigate: (para: string, { }) => void};
+  const dispatch = useDispatch();
 
   useEffect(() => {
-
-    const teste = async () => {
-      const data: any = []
-      const snapshot = await firestore().collection('vehicles').get()
-        snapshot.forEach(doc => {
-          data.push({id: doc.id, ...doc.data()})
-        })
-
-      const allVehicles = await Promise.all(data.map(async (curr: any) => {
-        const list = await storage().ref(`${curr.description.Model}vehicles,${curr.id}`).list()
-        const urls = await Promise.all(list.items.map(async (ref: { fullPath: any; }) => {
-              const url = await storage().ref(ref.fullPath).getDownloadURL()
-                return url;
-              }));
-            return {...curr, images: urls}
-          }))
-          setVehiclesData(allVehicles) 
+    const get = async () => {
+      const allVehicles = await getData();
+      setVehiclesData(allVehicles);
+      dispatch(setData(allVehicles))
     }
-        teste()
+        get();
   }, [])
-// console.log(vehiclesData);
 
   return (
     <Container>
       <Scroll>
         {vehiclesData.length > 0 && vehiclesData.map((curr) => (
-      <Card key={curr.id}>
+      <Card key={curr.id} onPress={() => navigation.navigate('vehicle', { id: curr.id })} >
         <Image source={{uri: curr.images[0]}}/>
         <Title>{curr.description.Model}</Title>
         <Text>{curr.description.Year}</Text>
@@ -44,7 +34,7 @@ const Cards = () => {
 
       </Scroll>
     </Container>
-  )
+  );
 }
 
-export default Cards
+export default Cards;

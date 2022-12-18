@@ -10,8 +10,8 @@ import {
 import { ThemeProvider } from 'styled-components/native';
 import { Routes } from './src/routes';
 import theme from './src/theme/'
-import Home from './src/screens/Home';
-import SingUp from './src/screens/SingUp';
+import { Provider } from 'react-redux';
+import store from './src/redux/store';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -21,16 +21,16 @@ export default function App() {
     Roboto_700Bold
   });
 
-  // if (!fontsLoaded) {
-  //   return <AppLoading />;
   if (!fontsLoaded) {
     return null ;
   }
   return (
     <ThemeProvider theme={theme}>
       <StatusBar style="auto" backgroundColor={theme.LIGTH.Back} />
-      <Routes />
-      {/* <Home /> */}
+      <Provider store={store}>
+        <Routes />
+      </Provider>
+
     </ThemeProvider>
   );
 }
