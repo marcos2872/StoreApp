@@ -10,15 +10,6 @@ const Vehicle = () => {
   const  { data }  = useSelector(({ data }: any) => data) as { data: void[] };
 
   const vehicleData = data.find(({ id: vId }: any) => vId === id) as unknown as vehicleType;
-  console.log(vehicleData);
-
-  // const teste = () => {
-  //   return (
-  //     <View>
-  //       <Image />
-  //     </View>
-  //   )
-  // }
  
   return (
     <Container>

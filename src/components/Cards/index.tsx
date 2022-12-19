@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { Card, Container, Image, Price, Scroll, Text, Title } from './styled'
+import { Card, CardLoading, Container, Image, Price, Scroll, Text, Title } from './styled'
 import getData from '../../services/getData';
 import { useNavigation } from '@react-navigation/native';
 import { setData } from '../../redux/reduces/data'
@@ -20,17 +20,34 @@ const Cards = () => {
         get();
   }, [])
 
+  const flash = {
+    0: {
+      opacity: 1,
+    },
+    0.5: {
+      opacity: 0,
+    },
+    1: {
+      opacity: 1,
+    },
+  };
+
   return (
     <Container>
       <Scroll>
-        {vehiclesData.length > 0 && vehiclesData.map((curr) => (
+        {vehiclesData.length > 0 ? vehiclesData.map((curr) => (
       <Card key={curr.id} onPress={() => navigation.navigate('vehicle', { id: curr.id })} >
         <Image source={{uri: curr.images[0]}}/>
         <Title>{curr.description.Model}</Title>
         <Text>{curr.description.Year}</Text>
         <Price>${curr.description.Price}</Price>
       </Card>
-        ))}
+        )) : (
+          <>
+          <CardLoading animation={flash} iterationCount='infinite' duration={2000} />
+          <CardLoading animation={flash} iterationCount='infinite' duration={2000} />
+          </>
+        )}
 
       </Scroll>
     </Container>
