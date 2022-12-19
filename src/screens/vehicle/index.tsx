@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Carousel, Image } from './styled';
+import { Container, Carousel, Image, Title, Price, Description, SubTitle, Text, SubDescription, SubDescriptionContainer } from './styled';
 import { useRoute } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { vehicleType } from '../../types/vehicle'
@@ -25,9 +25,26 @@ const Vehicle = () => {
       decelerationRate='fast'
       data={vehicleData.images}
       renderItem={({item}: any) => (
-        <Image source={{uri: item}} />
+        <Image source={{uri: item}} loadingIndicatorSource={require('../../assets/loading.gif')} />
       )}
       />
+      <Description>
+      <Title>{vehicleData.description.Model}</Title>
+      <Price>${vehicleData.description.Price}</Price>
+      <SubDescriptionContainer>
+        {Object.keys(vehicleData.description).map((curr: string) => {
+          if(curr !== 'Model' && curr !== 'Price' ) {
+            return (
+              <SubDescription key={Math.random() * (10 - 1) + 1}>
+              <SubTitle>{curr}</SubTitle>
+              <Text>{vehicleData.description[curr]}</Text>
+              </SubDescription>
+            )
+          }
+          return null;
+        })}
+      </SubDescriptionContainer>
+      </Description>
 
     </Container>
   )
