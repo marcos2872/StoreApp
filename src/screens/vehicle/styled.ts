@@ -3,12 +3,6 @@ import { RFPercentage } from "react-native-responsive-fontsize";
 
 export const  Container = styled.ScrollView`
 background-color: ${({theme}) => theme.LIGTH.Back};
-/* flex: 1; */
-/* flex-direction: column; */
-/* align-items: center; */
-/* justify-content: center; */
-/* height: 100%; */
-/* width: 100%; */
 `
 export const Carousel = styled.FlatList`
 max-height: ${({theme}) => theme.SIZE.window * 0.75}px;
@@ -47,14 +41,32 @@ export const SubDescription = styled.View`
 flex: 1;
 min-width: ${RFPercentage(10)}px;
 margin-top: 10px;
+`
+export const SpecificationContainer = styled.View`
+margin-top: ${RFPercentage(5)}px;
+flex: 1;
+`
+export const Specification = styled.View`
+flex: 1;
+flex-direction: row;
 align-items: center;
-
+margin-bottom: ${RFPercentage(2)}px;
+`
+export const FeaturesContainer = styled.View`
+margin-top: ${RFPercentage(5)}px;
+flex: 1;
+`
+export const Feature = styled.View`
+flex: 1;
+flex-direction: row;
+align-items: center;
+margin-bottom: ${RFPercentage(2)}px;
 `
 export const SubTitle = styled.Text`
 font-family: ${({theme}) => theme.FONTS.Medium};
 font-size: ${RFPercentage(2)}px;
 `
 export const Text = styled.Text`
-font-family: ${({theme}) => theme.FONTS.Light};
+font-family: ${({theme}) => theme.FONTS.Regular};
 font-size: ${RFPercentage(1.5)}px;
 `

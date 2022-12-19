@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Carousel, Image, Title, Price, Description, SubTitle, Text, SubDescription, SubDescriptionContainer } from './styled';
+import { Container, Carousel, Image, Title, Price, Description, SubTitle, Text, SubDescription, SubDescriptionContainer, FeaturesContainer, Feature, SpecificationContainer } from './styled';
 import { useRoute } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { vehicleType } from '../../types/vehicle'
@@ -29,21 +29,46 @@ const Vehicle = () => {
       )}
       />
       <Description>
-      <Title>{vehicleData.description.Model}</Title>
-      <Price>${vehicleData.description.Price}</Price>
-      <SubDescriptionContainer>
-        {Object.keys(vehicleData.description).map((curr: string) => {
-          if(curr !== 'Model' && curr !== 'Price' ) {
-            return (
-              <SubDescription key={Math.random() * (10 - 1) + 1}>
-              <SubTitle>{curr}</SubTitle>
-              <Text>{vehicleData.description[curr]}</Text>
-              </SubDescription>
-            )
-          }
-          return null;
-        })}
-      </SubDescriptionContainer>
+        <Title>{vehicleData.description.Model}</Title>
+        <Price>${vehicleData.description.Price}</Price>
+        <SubDescriptionContainer>
+          {Object.keys(vehicleData.description).map((curr) => {
+            if(curr !== 'Model' && curr !== 'Price' ) {
+              const text = vehicleData.description[curr];
+              return (
+                <SubDescription key={Math.random() * (10 - 1) + 1}>
+                  <SubTitle>{curr}</SubTitle>
+                  <Text>{text}</Text>
+                </SubDescription>
+              )
+            }
+            return null;
+          })}
+        </SubDescriptionContainer>
+        <SpecificationContainer>
+        {Object.keys(vehicleData.specifications).map((curr) => {
+              const bool = vehicleData.specifications[curr];
+              return (
+                <Feature key={Math.random() * (10 - 1) + 1}>
+                  <SubTitle>{curr}:  </SubTitle>
+                  <Text>{bool}</Text>
+                </Feature>
+              )
+            }
+          )}
+        </SpecificationContainer>
+        <FeaturesContainer>
+        {Object.keys(vehicleData.features).map((curr) => {
+              const bool = vehicleData.features[curr];
+              return (
+                <Feature key={Math.random() * (10 - 1) + 1}>
+                  <SubTitle>{curr}:  </SubTitle>
+                  <Text>{bool ? 'sim' : 'não'}</Text>
+                </Feature>
+              )
+            }
+          )}
+        </FeaturesContainer>
       </Description>
 
     </Container>
