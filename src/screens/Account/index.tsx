@@ -5,21 +5,25 @@ import { Button, Container, Name, SingOut, SingOutIcon, Text } from './styled'
 import firestore from '@react-native-firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
+import { setIsLogged } from '../../redux/reduces/userLogged'
+import { useDispatch } from 'react-redux'
 
 const Account = () => {
-  const [logget, setLogged] = useState(false);
+  const [logged, setLogged] = useState(false);
   const [userData, setUserData] = useState<any>();
   const navigator = useNavigation() as {navigate: (param: string) => void};
+  const dispatch = useDispatch();
 
   const getUser = async () => {
     const local = await AsyncStorage.getItem('@cleberapp:user') as string;
-    const {userId, isLogged} = JSON.parse(local);
+    const {user, userId, isLogged} = JSON.parse(local);
     if (isLogged) {
+      setUserData(user)
+      dispatch(setIsLogged(true))
       setLogged(true);
-      const {_data} = await firestore().collection('users').doc(userId).get() as unknown as {'_data': any};
-      return setUserData(_data);
+      const { _data } = await firestore().collection('users').doc(userId).get() as unknown as {'_data': any};
+      return JSON.stringify(user) !== JSON.stringify(_data) ? setUserData(_data) : null;
     }
-    return null
   }
 
   useEffect(() => {
@@ -27,23 +31,19 @@ const Account = () => {
   }, []);
 
   const headlerSingOut = async () => {
-    if(!logget) navigator.navigate('singin')
+    if(!logged) navigator.navigate('singin')
     await AsyncStorage.setItem('@cleberapp:user', JSON.stringify({isLogged: false, userId: ''}))
+    dispatch(setIsLogged(false))
     auth().signOut().then(() => navigator.navigate('home'))
   }
 
   return (
     <Container>
-      <Name>{userData ? userData.displayName : 'not logged in'}</Name>
+      <Name>{userData && userData.displayName}</Name>
       <SingOut onPress={headlerSingOut}>
-        <SingOutIcon source={logget? require('../../assets/sair.png') : require('../../assets/entrar-user.png')  }/>
+        <SingOutIcon source={ logged && require('../../assets/sair.png') }/>
       </SingOut>
       <Text>{userData && userData.email}</Text>
-      {userData && (
-      <Button onPress={() => navigator.navigate('addvehicle')}>
-        <Text>add vehicle</Text>
-      </Button>
-      )}
       <OptionsScreens />
     </Container>
   )

@@ -24,7 +24,6 @@ export function Routes(){
 
         <Screen name='singup' component={SingUp} options={{
         title: 'Register',
-        
         headerTitleAlign: 'center',
         headerStyle: {
           backgroundColor: theme.LIGTH.Back,

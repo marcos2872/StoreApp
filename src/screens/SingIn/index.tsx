@@ -7,12 +7,15 @@ import * as EmailValidator from 'email-validator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
+import { setIsLogged } from '../../redux/reduces/userLogged'
+import { useDispatch } from 'react-redux'
 
 const SingIn = () => {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const navigation = useNavigation() as {navigate: (para: string) => void};
+  const dispatch = useDispatch();
 
   const handleNewAccount = () => {
   setIsLoading(true)
@@ -20,9 +23,9 @@ const SingIn = () => {
     auth().signInWithEmailAndPassword(email, pass)
     .then(async (res) => {
       
-      // const fire = await firestore().collection('users').doc(res.user.uid).get() as unknown as {'_data': any}
-      await AsyncStorage.setItem('@cleberapp:user', JSON.stringify({isLogged: true, userId: res.user.uid}))
-
+      const { _data } = await firestore().collection('users').doc(res.user.uid).get() as unknown as {'_data': any}
+      await AsyncStorage.setItem('@cleberapp:user', JSON.stringify({isLogged: true, userId: res.user.uid, user: _data}))
+      dispatch(setIsLogged(true))
       navigation.navigate('home')
     })
     .catch((erro) => Alert.alert(erro.message.split("]")[1]))
@@ -31,7 +34,6 @@ const SingIn = () => {
   } catch (error) {
     console.log(error);
   }
-
 
   };
 
