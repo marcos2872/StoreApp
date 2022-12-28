@@ -2,7 +2,7 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import Cards from '../../components/Cards'
 import { useRoute } from '@react-navigation/native';
-import { Container } from './stuled';
+import { Container } from './styled';
 import OptionsScreens from '../../components/OptionsScreens';
 
 const ScreenList = () => {

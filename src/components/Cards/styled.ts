@@ -5,8 +5,7 @@ import * as Animatable from 'react-native-animatable';
 export const  Container = styled.View`
 background-color: ${({theme}) => theme.LIGTH.Back};
 width: 100%;
-gap: 5px;
-padding-top: ${RFPercentage(5)}px;
+padding-top: ${(props) => !props.search ? ({theme}) => theme.SIZE.statusbar -22 : 0}px;
 padding-bottom: ${RFPercentage(7)}px;
 `
 
