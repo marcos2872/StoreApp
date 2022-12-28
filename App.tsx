@@ -24,13 +24,13 @@ export default function App() {
   if (!fontsLoaded) {
     return null ;
   }
+
   return (
     <ThemeProvider theme={theme}>
       <StatusBar style="auto" backgroundColor={theme.LIGTH.Back} />
       <Provider store={store}>
         <Routes />
       </Provider>
-
     </ThemeProvider>
   );
 }

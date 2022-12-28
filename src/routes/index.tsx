@@ -4,6 +4,7 @@ import Account from '../screens/Account';
 import AddVehicle from '../screens/AddVehicle';
 import Chat from '../screens/Chat';
 import Home from '../screens/Home';
+import ScreenList from '../screens/ScreenList';
 import Search from '../screens/Search';
 import SingIn from '../screens/SingIn';
 import SingUp from '../screens/SingUp';
@@ -65,6 +66,12 @@ export function Routes(){
         headerTitleStyle:{
           fontFamily: 'Roboto_700Bold'
         }
+      }}  />
+      <Screen name='screenList' component={ScreenList} options={{
+        title: '',
+        headerStyle: {
+          backgroundColor: theme.LIGTH.Back,
+        },
       }}  />
       </Navigator>
     </NavigationContainer>

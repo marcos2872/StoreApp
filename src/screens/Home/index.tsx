@@ -9,7 +9,7 @@ const Home = () => {
   return (
     <Container>
       {/* <StatusBar style="auto" backgroundColor={theme.LIGTH.Back} /> */}
-      <Cards />
+      <Cards search=''/>
       <OptionsScreens />
     </Container>
   )

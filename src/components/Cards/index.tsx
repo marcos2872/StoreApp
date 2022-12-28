@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { setData } from '../../redux/reduces/data'
 import { useDispatch } from 'react-redux'
 
-const Cards = () => {
+const Cards = ({search}: {search: string}) => {
   const [vehiclesData, setVehiclesData] = useState<any[]>([]);
   const navigation = useNavigation() as {navigate: (para: string, { }) => void};
   const dispatch = useDispatch();

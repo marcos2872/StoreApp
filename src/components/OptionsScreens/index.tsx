@@ -7,17 +7,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const OptionsScreens = () => {
   const navigation = useNavigation() as {navigate: (para: string) => void};
   const  { logged }  = useSelector(({ logged }: { logged: boolean; }) => logged) as unknown as {logged: boolean};
-  const [ad, setAd] = useState(false);
+  const [admin, setAdmin] = useState(false);
 
   useEffect(() => {
     if(logged) {
       (async () => {
         const local = await AsyncStorage.getItem('@cleberapp:user') as string;
         const { user: { isAdmin } } = JSON.parse(local);
-        setAd(isAdmin)
+        setAdmin(isAdmin)
       })()
     }
-    setAd(false)
+    setAdmin(false)
   }, [logged])
   
   return (
@@ -37,7 +37,7 @@ const OptionsScreens = () => {
       <Text>Chat</Text>
     </Button>
 
-    {ad && (
+    {admin && (
     <Button onPress={() => navigation.navigate('addvehicle')}>
       <Image source={require('../../assets/addVehicle.png')}/>
       <Text>Vehicle</Text>
