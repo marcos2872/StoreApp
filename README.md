@@ -1,5 +1,4 @@
 # cleberaApp
 
-App de venda de carro criado com React Native usano expo, em Typescript e usando Firebase.
+>App criado para treinar conceitos do React Native, Expo, TypeScript e Firebase
 <br />
-Projeto em construção
